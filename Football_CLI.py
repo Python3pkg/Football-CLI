@@ -36,10 +36,10 @@ class main:
         menu = colored("\nMain Menu:\n[1]Standings  [2]Match Scores  [3]Top Scorers  [4]Champions League  "
                        "[5]Live Streams  [6]Highlights  [7]Exit"
                        "\n", 'red', attrs=['bold'])
-        choose_menu = input(menu)
+        choose_menu = eval(input(menu))
         menu_guard = ["1", "2", "3", "4", "5", "6", "7"]
         while choose_menu not in menu_guard:
-            choose_menu = input(menu)
+            choose_menu = eval(input(menu))
         if choose_menu == "1":
             ChooseMenu.choose_class(self, class_name="Standings")
         elif choose_menu == "2":
@@ -74,10 +74,10 @@ class ChooseMenu:
     def choose_method_championsleague(self):
         menu = colored("Champions League: \n[1]Group Stage Standings  [2]Group Stage Results  [3]Results by Group"
                        "  [4]TopScorers  [5]Main Menu\n", 'red', attrs=['bold'])
-        choose_menu = input(menu)
+        choose_menu = eval(input(menu))
         menu_guard = ["1", "2", "3", "4", "5"]
         while choose_menu not in menu_guard:
-            choose_menu = input(menu)
+            choose_menu = eval(input(menu))
         if choose_menu == "1":
             for x in range(0,8):
                 ChampionsLeague.champions_league_groupstage(self, group_stage + groups[x], group_name=groups[x][0])
@@ -95,10 +95,10 @@ class ChooseMenu:
     def choose_method(self, class_name):
         menu = colored("Which League do you want?\n[1]EPL  [2]Liga BBVA  [3]Serie A  [4]Ligue 1  "
                        "[5]Bundesliga  [6]Main Menu\n", 'red', attrs=['bold'])
-        choose_menu = input(menu)
+        choose_menu = eval(input(menu))
         menu_guard = ["1", "2", "3", "4", "5", "6"]
         while choose_menu not in menu_guard:
-            choose_menu = input(menu)
+            choose_menu = eval(input(menu))
         if choose_menu == "1":
             ChooseMenu.run_method(self, class_name, epl, league_name='Premier League')
         elif choose_menu == "2":
@@ -146,7 +146,7 @@ class ChampionsLeague():
                 if x == 0 or x == 1:
                     cprint(" " + str(x + 1) + ".   " + str("".join(stats)), 'green')
                 if x == 2 or x == 3:
-                    print(" " + str(x + 1) + ".   " + str("".join(stats)))
+                    print((" " + str(x + 1) + ".   " + str("".join(stats))))
         except IndexError:
             pass
 
@@ -258,23 +258,23 @@ class LiveStreams:
         count = 0
         for submission in subreddit.get_hot(limit=20):
             if "Match Thread" in submission.title:
-                print(colored("Game Name:", 'blue',attrs=['bold']) + " " + submission.title[13:])
+                print((colored("Game Name:", 'blue',attrs=['bold']) + " " + submission.title[13:]))
                 count -= 1
             else:
                 count += 1
         if count == 2:
             cprint("There are currently no live games for streaming, please try again later...", 'yellow')
             main.choose_menu(self)
-        game_name = input(colored("\n\nEnter the name of the game you want to watch (Any team's name that you see above"
-                                  " will work) [1]Exit: \n", 'red', attrs=['bold']))
+        game_name = eval(input(colored("\n\nEnter the name of the game you want to watch (Any team's name that you see above"
+                                  " will work) [1]Exit: \n", 'red', attrs=['bold'])))
         for submission in subreddit.get_hot(limit=40):
             if re.search(game_name, submission.title, re.IGNORECASE):
-                print(colored("\nTitle: ",'blue', attrs=['bold']), submission.title,
-                      colored("\nLink: ",'blue', attrs=['bold']), submission.url, "\nPick your link!\n")
+                print((colored("\nTitle: ",'blue', attrs=['bold']), submission.title,
+                      colored("\nLink: ",'blue', attrs=['bold']), submission.url, "\nPick your link!\n"))
                 comments = submission.comments
                 for comment in comments[1:8]:                       # Skip first comment because it's a bot moderator
                     if "acestream" not in comment.body:             # Don't include acestream links
-                        print(comment.body.strip())                 # Prints top comments starting from 2nd top comment
+                        print((comment.body.strip()))                 # Prints top comments starting from 2nd top comment
             elif game_name == "1":
                 pass
 
@@ -293,54 +293,54 @@ class Highlights:
                 game_name = submission.title[:-13]
                 if "Premier League" in submission.title:            # All string/color formatting for convenience
                     game_string = game_name.replace("– Premier League", "")
-                    print(colored("{:<28}".format("Premier League Highlights:"), 'red', attrs=['bold']),
-                          date, " ", game_string)
+                    print((colored("{:<28}".format("Premier League Highlights:"), 'red', attrs=['bold']),
+                          date, " ", game_string))
                 elif "La Liga" in submission.title:
                     game_string = game_name.replace("– La Liga", "")
-                    print(colored("{:<28}".format("La Liga Highlights:"), 'green', attrs=['bold']),
-                          date, " ", game_string)
+                    print((colored("{:<28}".format("La Liga Highlights:"), 'green', attrs=['bold']),
+                          date, " ", game_string))
                 elif "Bundesliga" in submission.title:
                     game_string = game_name.replace("– Bundesliga", "")
-                    print(colored("{:<28}".format("Bundesliga Highlights:"), 'cyan', attrs=['bold']),
-                          date, " ", game_string)
+                    print((colored("{:<28}".format("Bundesliga Highlights:"), 'cyan', attrs=['bold']),
+                          date, " ", game_string))
                 elif "Ligue 1" in submission.title:
                     game_string = game_name.replace("– Ligue 1", "")
-                    print(colored("{:<28}".format("Ligue 1 Highlights:"),'yellow',attrs=['bold']),
-                          date, " ", game_string)
+                    print((colored("{:<28}".format("Ligue 1 Highlights:"),'yellow',attrs=['bold']),
+                          date, " ", game_string))
                 elif "Serie A" in submission.title:
                     game_string = game_name.replace("– Serie A", "")
-                    print(colored("{:<28}".format("Serie A Highlights:"), 'magenta', attrs=['bold']),
-                          date, " ", game_string)
+                    print((colored("{:<28}".format("Serie A Highlights:"), 'magenta', attrs=['bold']),
+                          date, " ", game_string))
                 elif "MLS" in submission.title:
                     game_string = game_name.replace("– MLS", "")
-                    print(colored("{:<28}".format("MLS Highlights:"), 'blue', attrs=['bold']),
-                          date, " ", game_string)
+                    print((colored("{:<28}".format("MLS Highlights:"), 'blue', attrs=['bold']),
+                          date, " ", game_string))
                 elif "Super Lig" in submission.title:
                     game_string = game_name.replace("- Super Lig", "")
-                    print(colored("{:<28}".format("Super Lig Highlights:"), 'blue', attrs=['bold']),
-                          date, " ", game_string)
+                    print((colored("{:<28}".format("Super Lig Highlights:"), 'blue', attrs=['bold']),
+                          date, " ", game_string))
                 elif "Eredivisie" in submission.title:
                     game_string = game_name.replace("– Eredivisie", "")
-                    print(colored("{:<28}".format("Eredivisie Highlights:"), 'blue', attrs=['bold']),
-                          date, " ", game_string)
+                    print((colored("{:<28}".format("Eredivisie Highlights:"), 'blue', attrs=['bold']),
+                          date, " ", game_string))
                 elif "Europa League" in submission.title:
                     game_string = game_name.replace("– UEFA Europa League", "")
-                    print(colored("{:<28}".format("Europe League Highlights:"), 'grey', attrs=['bold']),
-                          date, " ", game_string)
+                    print((colored("{:<28}".format("Europe League Highlights:"), 'grey', attrs=['bold']),
+                          date, " ", game_string))
                 elif "Champions League" in submission.title:
                     game_string = game_name.replace("– UEFA Champions League", "")
-                    print(colored("{:<28}".format("Champions League Highlights:"), 'grey', attrs=['bold']),
-                          date, " ", game_string)
+                    print((colored("{:<28}".format("Champions League Highlights:"), 'grey', attrs=['bold']),
+                          date, " ", game_string))
                 elif " " in submission.title:
-                    print(colored("{:<28}".format("Other Highlights:"), 'blue', attrs=['bold']), date, " " ,
-                          game_name)
-        highlight = input(colored("\nWhich game highlights do you want (Search by Team Name)?\n"
-                                  "", 'red', attrs=['bold']))
+                    print((colored("{:<28}".format("Other Highlights:"), 'blue', attrs=['bold']), date, " " ,
+                          game_name))
+        highlight = eval(input(colored("\nWhich game highlights do you want (Search by Team Name)?\n"
+                                  "", 'red', attrs=['bold'])))
         for submission in subreddit.get_hot(limit=100):              # Searches first 100 posts based on search criteria
             if re.search(highlight, submission.title, re.IGNORECASE):
                 colored_title = colored("\nTitle:", 'blue', attrs=['bold', 'bold'])
                 colored_title2 = colored(" " + submission.title, 'blue')
-                print(colored_title + colored_title2, "\n", submission.selftext)
+                print((colored_title + colored_title2, "\n", submission.selftext))
 
 
 # Starts the Program
